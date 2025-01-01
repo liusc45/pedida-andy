@@ -13,7 +13,7 @@
         }
 
         .contenedor {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #ff9a9e);
             background-size: 400% 400%;
             width: 100vw;
             height: 100vh;
@@ -27,44 +27,16 @@
         }
 
         @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .contenedor::before {
-            content: '❤️';
-            position: absolute;
-            font-size: 2rem;
-            animation: float 6s ease-in-out infinite;
-            opacity: 0.7;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(720deg);
-                opacity: 0;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .carta {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.98);
+            padding: 3.5rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(251, 194, 235, 0.4);
             text-align: center;
             max-width: 90%;
             width: 500px;
@@ -72,97 +44,111 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            border: 3px solid rgba(255, 154, 158, 0.3);
         }
 
-        .carta::before {
+        .carta::after {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            transition: 0.5s;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.7s;
         }
 
-        .carta:hover::before {
+        .carta:hover::after {
             left: 100%;
         }
 
-        .carta:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-
         .nombre {
-            font-size: 2.5rem;
-            color: #e73c7e;
+            font-size: 3rem;
+            color: #ff6b81;
             margin-bottom: 1rem;
+            font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             animation: latido 1.5s ease-in-out infinite;
         }
 
         @keyframes latido {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .subtitulo {
+            font-size: 1.5rem;
+            color: #ff9a9e;
+            margin-bottom: 2rem;
+            font-style: italic;
         }
 
         .pregunta {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: #333;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
             font-weight: bold;
+            line-height: 1.4;
         }
 
         .botones {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             justify-content: center;
+            margin-top: 2rem;
         }
 
         button {
-            font-size: 1.3rem;
-            padding: 0.75em 1.5em;
+            font-size: 1.4rem;
+            padding: 0.8em 2em;
             border: none;
-            border-radius: 15px;
+            border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         #yesBtn {
-            background: linear-gradient(45deg, #ff6b6b, #ee7752);
+            background: linear-gradient(45deg, #ff6b81, #ff9a9e);
             color: white;
-            box-shadow: 0 5px 15px rgba(238, 119, 82, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 107, 129, 0.4);
         }
 
         #yesBtn:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(238, 119, 82, 0.6);
+            box-shadow: 0 8px 20px rgba(255, 107, 129, 0.6);
         }
 
         #noBtn {
-            background: linear-gradient(45deg, #23a6d5, #23d5ab);
+            background: linear-gradient(45deg, #fbc2eb, #fad0c4);
             color: white;
             position: relative;
-            box-shadow: 0 5px 15px rgba(35, 166, 213, 0.4);
         }
 
-        #noBtn:hover {
-            box-shadow: 0 8px 20px rgba(35, 166, 213, 0.6);
+        .mensaje-flotante {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.98);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(251, 194, 235, 0.4);
+            display: none;
+            z-index: 1001;
+            animation: aparecer 0.7s ease-out;
+            font-size: 1.8rem;
+            max-width: 80%;
+            text-align: center;
+            border: 3px solid rgba(255, 154, 158, 0.3);
+            line-height: 1.5;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
         .corazones-container {
@@ -177,47 +163,13 @@
         .corazon {
             position: absolute;
             font-size: 2rem;
-            animation: floatHeart 2s ease-in-out;
+            animation: floatHeart 2.5s ease-in-out;
         }
 
         @keyframes floatHeart {
-            0% {
-                transform: translateY(0) scale(0) rotate(0deg);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-50vh) scale(1) rotate(180deg);
-            }
-            100% {
-                transform: translateY(-100vh) scale(0) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .mensaje-flotante {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 1001;
-            animation: aparecer 0.5s ease-out;
-        }
-
-        @keyframes aparecer {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
+            0% { transform: translateY(0) scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-50vh) scale(1) rotate(180deg); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
@@ -225,7 +177,8 @@
     <div class="contenedor">
         <div class="carta">
             <div class="nombre">Andy ❤️</div>
-            <p class="pregunta">¿Quieres ser mi Novia? 💝</p>
+            <div class="subtitulo">Mi mandona más hermosa ✨</div>
+            <p class="pregunta">¿Quieres ser mi novia? 💝</p>
             <div class="botones">
                 <button id="yesBtn">¡Sí! 💖</button>
                 <button id="noBtn">No 💔</button>
@@ -241,7 +194,7 @@
         const corazonesContainer = document.querySelector('#corazones');
         const mensajeFlotante = document.querySelector('#mensajeFlotante');
 
-        function mostrarMensajeFlotante(mensaje, duracion = 2000) {
+        function mostrarMensajeFlotante(mensaje, duracion = 2500) {
             mensajeFlotante.textContent = mensaje;
             mensajeFlotante.style.display = 'block';
             setTimeout(() => {
@@ -251,7 +204,7 @@
 
         function crearCorazones() {
             corazonesContainer.style.display = 'block';
-            const emojis = ['❤️', '💖', '💝', '💕', '💗'];
+            const emojis = ['❤️', '💖', '💝', '💕', '💗', '✨'];
             
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
@@ -263,7 +216,7 @@
                     
                     setTimeout(() => {
                         corazon.remove();
-                    }, 2000);
+                    }, 2500);
                 }, i * 50);
             }
         }
@@ -272,24 +225,34 @@
             crearCorazones();
             
             const mensajes = [
-                "Andy, me haces la persona más feliz del mundo ❤️",
-                "Gracias por existir en mi vida ✨",
-                "Contigo todo es más hermoso 💖",
-                "Eres lo mejor que me ha pasado 💝"
+                "Mi hermosa militar médico, mi orgullo ⚕️",
+                "Eres el amor de mi vida ❤️",
+                "Mi mandona hermosa y perfecta 👑",
+                "Me enamora tu valentía y dedicación ✨",
+                "Me encantas cuando me das órdenes con amor 💝",
+                "Admiro tu fortaleza y tu corazón de oro 💗",
+                "Eres mi felicidad completa 💖",
+                "Me enamora todo de ti 🌟",
+                "Contigo quiero todo en esta vida 💑",
+                "Mi corazón es tuyo para siempre 💕",
+                "Sueño con verte vestida de blanco 👰",
+                "Te amaré cada día más ✨",
+                "Eres perfecta en todos los sentidos 💝",
+                "Te amo más que a nada en este mundo ❤️"
             ];
             
             let contador = 0;
             const intervaloMensajes = setInterval(() => {
                 if (contador < mensajes.length) {
-                    mostrarMensajeFlotante(mensajes[contador], 1500);
+                    mostrarMensajeFlotante(mensajes[contador], 2300);
                     contador++;
                 } else {
                     clearInterval(intervaloMensajes);
                     setTimeout(() => {
-                        window.location.href = 'https://www.youtube.com/watch?v=jhMiIUb2GEA&list=RDEMu4y8s1c4D3qB3AdQPG5Z6A&start_radio=1';
-                    }, 1500);
+                        window.location.href = 'https://www.youtube.com/watch?v=is_iOZeHTfU';
+                    }, 2000);
                 }
-            }, 1600);
+            }, 2500);
         });
 
         noBtn.addEventListener('mouseover', function () {
@@ -301,7 +264,6 @@
             noBtn.style.setProperty('transform', `translate(-${randomX}%,-${randomY}%)`);
         });
 
-        // Crear corazones flotantes automáticos en el fondo
         setInterval(() => {
             const corazon = document.createElement('div');
             corazon.innerHTML = '❤️';
