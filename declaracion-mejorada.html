@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Andy ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .contenedor {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .contenedor::before {
+            content: '❤️';
+            position: absolute;
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .carta {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 90%;
+            width: 500px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .carta:hover::before {
+            left: 100%;
+        }
+
+        .carta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nombre {
+            font-size: 2.5rem;
+            color: #e73c7e;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: latido 1.5s ease-in-out infinite;
+        }
+
+        @keyframes latido {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pregunta {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .botones {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        button {
+            font-size: 1.3rem;
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #yesBtn {
+            background: linear-gradient(45deg, #ff6b6b, #ee7752);
+            color: white;
+            box-shadow: 0 5px 15px rgba(238, 119, 82, 0.4);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(238, 119, 82, 0.6);
+        }
+
+        #noBtn {
+            background: linear-gradient(45deg, #23a6d5, #23d5ab);
+            color: white;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(35, 166, 213, 0.4);
+        }
+
+        #noBtn:hover {
+            box-shadow: 0 8px 20px rgba(35, 166, 213, 0.6);
+        }
+
+        .corazones-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+        }
+
+        .corazon {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatHeart 2s ease-in-out;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50vh) scale(1) rotate(180deg);
+            }
+            100% {
+                transform: translateY(-100vh) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .mensaje-flotante {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1001;
+            animation: aparecer 0.5s ease-out;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="carta">
+            <div class="nombre">Andy ❤️</div>
+            <p class="pregunta">¿Quieres ser mi Novia? 💝</p>
+            <div class="botones">
+                <button id="yesBtn">¡Sí! 💖</button>
+                <button id="noBtn">No 💔</button>
+            </div>
+        </div>
+    </div>
+    <div class="corazones-container" id="corazones"></div>
+    <div class="mensaje-flotante" id="mensajeFlotante"></div>
+
+    <script>
+        const yesBtn = document.querySelector('#yesBtn');
+        const noBtn = document.querySelector('#noBtn');
+        const corazonesContainer = document.querySelector('#corazones');
+        const mensajeFlotante = document.querySelector('#mensajeFlotante');
+
+        function mostrarMensajeFlotante(mensaje, duracion = 2000) {
+            mensajeFlotante.textContent = mensaje;
+            mensajeFlotante.style.display = 'block';
+            setTimeout(() => {
+                mensajeFlotante.style.display = 'none';
+            }, duracion);
+        }
+
+        function crearCorazones() {
+            corazonesContainer.style.display = 'block';
+            const emojis = ['❤️', '💖', '💝', '💕', '💗'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const corazon = document.createElement('div');
+                    corazon.classList.add('corazon');
+                    corazon.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    corazon.style.left = Math.random() * 100 + 'vw';
+                    corazonesContainer.appendChild(corazon);
+                    
+                    setTimeout(() => {
+                        corazon.remove();
+                    }, 2000);
+                }, i * 50);
+            }
+        }
+
+        yesBtn.addEventListener('click', function () {
+            crearCorazones();
+            
+            const mensajes = [
+                "Andy, me haces la persona más feliz del mundo ❤️",
+                "Gracias por existir en mi vida ✨",
+                "Contigo todo es más hermoso 💖",
+                "Eres lo mejor que me ha pasado 💝"
+            ];
+            
+            let contador = 0;
+            const intervaloMensajes = setInterval(() => {
+                if (contador < mensajes.length) {
+                    mostrarMensajeFlotante(mensajes[contador], 1500);
+                    contador++;
+                } else {
+                    clearInterval(intervaloMensajes);
+                    setTimeout(() => {
+                        window.location.href = 'https://www.youtube.com/watch?v=is_iOZeHTfU';
+                    }, 1500);
+                }
+            }, 1600);
+        });
+
+        noBtn.addEventListener('mouseover', function () {
+            const randomX = parseInt(Math.random() * 100);
+            const randomY = parseInt(Math.random() * 100);
+            noBtn.style.setProperty('position', 'absolute');
+            noBtn.style.setProperty('top', randomY + '%');
+            noBtn.style.setProperty('left', randomX + '%');
+            noBtn.style.setProperty('transform', `translate(-${randomX}%,-${randomY}%)`);
+        });
+
+        // Crear corazones flotantes automáticos en el fondo
+        setInterval(() => {
+            const corazon = document.createElement('div');
+            corazon.innerHTML = '❤️';
+            corazon.style.position = 'absolute';
+            corazon.style.left = Math.random() * 100 + '%';
+            corazon.style.top = '100%';
+            corazon.style.animation = 'float 6s ease-in-out';
+            document.querySelector('.contenedor').appendChild(corazon);
+            
+            setTimeout(() => {
+                corazon.remove();
+            }, 6000);
+        }, 500);
+    </script>
+</body>
+</html>
