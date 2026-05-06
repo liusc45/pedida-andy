@@ -660,12 +660,59 @@
                     return;
                 }
 
-                gsap.timeline({ defaults: { ease: 'power3.out' } })
-                    .to(proposalCard, { opacity: 1, y: 0, scale: 1, duration: 1.05 })
-                    .fromTo('.medical-mark', { opacity: 0, y: 12, scale: 0.86 }, { opacity: 1, y: 0, scale: 1, duration: 0.55 }, '-=0.62')
-                    .fromTo('.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45 }, '-=0.38')
-                    .fromTo('.name, .subtitle, .divider, .question, .hint', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.09 }, '-=0.15')
-                    .fromTo('.btn', { opacity: 0, y: 16, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.1, ease: 'back.out(1.5)' }, '-=0.2');
+                gsap.timeline({ defaults: { ease: 'power4.out' } })
+                    // Carta que se abre como una invitación
+                    .fromTo(proposalCard, 
+                        { opacity: 0, y: 40, rotateX: 15, scale: 0.9 }, 
+                        { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 1.2 }
+                    )
+                    // Doblado superior que se abre
+                    .fromTo('.card-inner', 
+                        { clipPath: 'inset(0 0 50% 0)' }, 
+                        { clipPath: 'inset(0 0 0 0)', duration: 0.9, ease: 'power3.inOut' }, 
+                        '-=1'
+                    )
+                    // Contenido que aparece
+                    .fromTo('.medical-mark', 
+                        { opacity: 0, y: 20, scale: 0.8 }, 
+                        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'back.out(1.4)' }, 
+                        '-=0.5'
+                    )
+                    .fromTo('.eyebrow', 
+                        { opacity: 0, y: 15, width: 0 }, 
+                        { opacity: 1, y: 0, width: 'auto', duration: 0.5 }, 
+                        '-=0.3'
+                    )
+                    .fromTo('.name', 
+                        { opacity: 0, y: 25, letterSpacing: '-0.2em' }, 
+                        { opacity: 1, y: 0, letterSpacing: '-0.045em', duration: 0.6 }, 
+                        '-=0.2'
+                    )
+                    .fromTo('.subtitle', 
+                        { opacity: 0, y: 15 }, 
+                        { opacity: 1, y: 0, duration: 0.5 }, 
+                        '-=0.3'
+                    )
+                    .fromTo('.divider', 
+                        { opacity: 0, scaleX: 0 }, 
+                        { opacity: 1, scaleX: 1, duration: 0.5 }, 
+                        '-=0.2'
+                    )
+                    .fromTo('.question', 
+                        { opacity: 0, y: 20 }, 
+                        { opacity: 1, y: 0, duration: 0.6 }, 
+                        '-=0.2'
+                    )
+                    .fromTo('.hint', 
+                        { opacity: 0, y: 15 }, 
+                        { opacity: 1, y: 0, duration: 0.5 }, 
+                        '-=0.3'
+                    )
+                    .fromTo('.btn', 
+                        { opacity: 0, y: 20, scale: 0.9 }, 
+                        { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.15, ease: 'back.out(1.5)' }, 
+                        '-=0.2'
+                    );
             }
 
             function moveNoButton() {
