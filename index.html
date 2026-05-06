@@ -140,6 +140,57 @@
             100% { transform: translate3d(var(--x-drift), -112vh, 0) rotate(220deg); opacity: 0; }
         }
 
+        /* Envelope styles */
+        .envelope {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(100%, 550px);
+            height: min(100%, 650px);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) rotateX(0deg);
+            transform-origin: top center;
+            width: 0;
+            height: 0;
+            border-left: 275px solid transparent;
+            border-right: 275px solid transparent;
+            border-top: 180px solid var(--wine);
+            opacity: 0;
+        }
+
+        .envelope-body {
+            position: absolute;
+            top: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 420px;
+            background: linear-gradient(145deg, var(--wine), var(--wine-dark));
+            border-radius: 8px;
+            box-shadow: 0 40px 100px rgba(95, 13, 49, 0.4);
+            opacity: 0;
+        }
+
+        .envelope-shadow {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 480px;
+            height: 20px;
+            background: rgba(95, 13, 49, 0.3);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
         .floating-dust {
             position: fixed;
             inset: 0;
@@ -582,6 +633,13 @@
         <span class="dust"></span>
     </div>
 
+    <!-- Envelope for opening effect -->
+    <div class="envelope" id="envelope" aria-hidden="true">
+        <div class="envelope-flap"></div>
+        <div class="envelope-body"></div>
+        <div class="envelope-shadow"></div>
+    </div>
+
     <main class="stage">
         <section class="proposal-card" id="proposalCard" aria-labelledby="proposalTitle">
             <div class="card-inner">
@@ -661,65 +719,93 @@
                     return;
                 }
 
-                // Crear el efecto de carta que se abre desde la parte superior
+                const envelope = document.getElementById('envelope');
+                const envelopeFlap = envelope.querySelector('.envelope-flap');
+                const envelopeBody = envelope.querySelector('.envelope-body');
+                const envelopeShadow = envelope.querySelector('.envelope-shadow');
+
+                // Envelope appears and opens
                 gsap.timeline({ defaults: { ease: 'power4.inOut' } })
-                    // Carta cerrada
+                    // Envelope appears
+                    .fromTo(envelopeFlap, { opacity: 0, scaleY: 0.5 }, { opacity: 1, scaleY: 1, duration: 0.8 }, 'envelope-enter')
+                    .fromTo(envelopeBody, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, 'envelope-enter')
+                    .fromTo(envelopeShadow, { opacity: 0, scaleX: 0.5 }, { opacity: 1, scaleX: 1, duration: 0.8 }, 'envelope-enter')
+                    
+                    // Flap opens slowly
+                    .to(envelopeFlap, { 
+                        rotateX: 140, 
+                        duration: 1.2, 
+                        ease: 'power3.inOut'
+                    }, 'flap-open')
+                    
+                    // Card rises from envelope
                     .fromTo(proposalCard, 
-                        { opacity: 0, y: 60, rotateX: 30, scale: 0.9 }, 
-                        { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 1.4 }
+                        { opacity: 0, y: 80, rotateX: 40, scale: 0.85 }, 
+                        { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 1.6 }, 
+                        'card-rise'
                     )
+                    
+                    // Envelope disappears
+                    .to([envelopeFlap, envelopeBody, envelopeShadow], { 
+                        opacity: 0, 
+                        duration: 0.6, 
+                        ease: 'power3.in'
+                    }, 'envelope-exit')
+                    
                     // Plegado superior que se abre
                     .fromTo('.card-inner', 
-                        { clipPath: 'inset(0 0 80% 0)' }, 
-                        { clipPath: 'inset(0 0 0 0)', duration: 1.2, ease: 'power3.inOut' }, 
-                        '-=1'
+                        { clipPath: 'inset(0 0 90% 0)' }, 
+                        { clipPath: 'inset(0 0 0 0)', duration: 1.4, ease: 'power3.inOut' }, 
+                        'card-reveal'
                     )
+                    
                     // Efecto de sombra que se disipa
                     .fromTo('.proposal-card', 
-                        { boxShadow: '0 60px 120px rgba(95, 13, 49, 0.35)' }, 
-                        { boxShadow: '0 40px 120px rgba(95, 13, 49, 0.25)', duration: 1 }, 
-                        '-=1'
+                        { boxShadow: '0 80px 150px rgba(95, 13, 49, 0.45)' }, 
+                        { boxShadow: '0 40px 120px rgba(95, 13, 49, 0.25)', duration: 1.2 }, 
+                        'card-reveal'
                     )
+                    
                     // Contenido que aparece secuencialmente
                     .fromTo('.medical-mark', 
                         { opacity: 0, y: 30, scale: 0.7 }, 
                         { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.5)' }, 
-                        '-=0.8'
+                        'content-reveal'
                     )
                     .fromTo('.eyebrow', 
                         { opacity: 0, y: 20, width: 0 }, 
                         { opacity: 1, y: 0, width: 'auto', duration: 0.7 }, 
-                        '-=0.5'
+                        'content-reveal'
                     )
                     .fromTo('.name', 
                         { opacity: 0, y: 30, letterSpacing: '-0.3em' }, 
                         { opacity: 1, y: 0, letterSpacing: '-0.045em', duration: 0.8 }, 
-                        '-=0.4'
+                        'content-reveal'
                     )
                     .fromTo('.subtitle', 
                         { opacity: 0, y: 20 }, 
                         { opacity: 1, y: 0, duration: 0.6 }, 
-                        '-=0.4'
+                        'content-reveal'
                     )
                     .fromTo('.divider', 
                         { opacity: 0, scaleX: 0 }, 
                         { opacity: 1, scaleX: 1, duration: 0.6 }, 
-                        '-=0.3'
+                        'content-reveal'
                     )
                     .fromTo('.question', 
                         { opacity: 0, y: 25 }, 
                         { opacity: 1, y: 0, duration: 0.7 }, 
-                        '-=0.3'
+                        'content-reveal'
                     )
                     .fromTo('.hint', 
                         { opacity: 0, y: 20 }, 
                         { opacity: 1, y: 0, duration: 0.6 }, 
-                        '-=0.4'
+                        'content-reveal'
                     )
                     .fromTo('.btn', 
                         { opacity: 0, y: 25, scale: 0.85 }, 
                         { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.2, ease: 'back.out(1.5)' }, 
-                        '-=0.2'
+                        'content-reveal'
                     );
             }
 
